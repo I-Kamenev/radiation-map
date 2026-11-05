@@ -1,9 +1,7 @@
-from fastapi import FastAPI
-
-# Создаем "приложение" (наш сервер)
+from fastapi import FastAPI, Request
+from fastapi.templating import Jinja2Templates
 app = FastAPI()
-
-# Если пользователь зайдет на главную страницу ("/"), выполни функцию ниже
+templates = Jinja2Templates(directory="templates")
 @app.get("/")
-def read_root():
-    return {"message": "Привет! Это система радиационного мониторинга."}
+def read_root(request: Request):
+    return templates.TemplateResponse(request, "index.html", {"request": request})
